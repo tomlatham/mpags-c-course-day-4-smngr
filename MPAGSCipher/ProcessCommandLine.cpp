@@ -79,6 +79,26 @@ bool processCommandLine(const std::vector<std::string>& args,
     else if ( args[i] == "--decrypt" ) {
             settings.cipherMode = CipherMode::Decrypt;
     }
+    else if ( args[i] == "--cipher" ){
+      if (args[i+1] == "caesar")
+        {
+            settings.cipherType = CipherType::Caesar;
+            ++i;
+        }
+      else if (args[i+1] == "playfair")
+        {
+            settings.cipherType = CipherType::Playfair;
+            ++i;
+        }
+      else
+      {
+            // Have encountered an unknown cipher type, output an error message
+            // and set flat to indicate the error and terminate loop
+            std::cerr << "[error] unknown cipher type '" << args[i+1] <<"'\n";
+            processStatus = false;
+            break;
+      } 
+    }  
     else {
       // Have encoutered an unknown flag, output an error message, set the flag
       // to indicate the error and terminate the loop

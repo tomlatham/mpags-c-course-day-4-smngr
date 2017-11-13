@@ -7,6 +7,7 @@
 
 // Our project headers
 #include "CipherMode.hpp"
+#include "CipherType.hpp"
 
 /**
  * \file ProcessCommandLine.hpp
@@ -24,6 +25,7 @@ struct ProgramSettings {
   std::string outputFile; ///< Name of the output file
   std::string cipherKey;  ///< Key to be used in encrypting/decrypting routine
   CipherMode cipherMode;  ///< Flag indicating the mode in which the cipher should run (i.e. encrypt or decrypt)
+  CipherType cipherType;  ///< Flag indicating the type of cipher to be run;
 };
 
 /**
