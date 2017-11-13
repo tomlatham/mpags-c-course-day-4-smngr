@@ -7,8 +7,7 @@ TEST_CASE("Playfair Cipher Encrypt", "[playfair]") {
   std::string key {"PlayfairExample"};
   std::string inputText {"HIDETHEGOLDINTHETREESTUMP"};
   PlayfairCipher pc{key};
-  pc.setKey(key);
-  std::string outputStr{"BMODZBXDNABEKUDMUIXMMOUVIF"};
+  std::string outputStr{"BMODZBXDNABEKUDMUIMXMOUVIF"};
   REQUIRE( pc.applyCipher(inputText, CipherMode::Encrypt) == outputStr);
 }
 
@@ -16,7 +15,6 @@ TEST_CASE("Playfair Cipher Decrypt", "[playfair]") {
   std::string key {"Example"};
   std::string inputText {"UAARBEDEXAPOPRQNXAXANR"};
   PlayfairCipher pc{key};
-  pc.setKey(key);
   std::string outputStr{"WEWILXLMEXETATTHEXEXIT"};
   REQUIRE( pc.applyCipher(inputText, CipherMode::Decrypt) == outputStr);
 }

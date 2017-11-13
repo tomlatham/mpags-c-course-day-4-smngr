@@ -91,6 +91,9 @@ int main(int argc, char* argv[])
     }
   }
 
+  // Create the output text, initially just a copy of the input
+  std::string outputText {inputText};
+
   switch(settings.cipherType){
 
     case(CipherType::Caesar):{
@@ -122,26 +125,8 @@ int main(int argc, char* argv[])
 
     // Run the Caesar cipher (using the specified key and encrypt/decrypt flag) on the input text
     CaesarCipher cipher { caesarKey };
-    std::string outputText { cipher.applyCipher( inputText, settings.cipherMode ) };
+    outputText = cipher.applyCipher( inputText, settings.cipherMode );
 
-    // Output the transliterated text
-    if (!settings.outputFile.empty()) {
-
-      // Open the file and check that we can write to it
-      std::ofstream outputStream(settings.outputFile);
-      if (!outputStream.good()) {
-        std::cerr << "[error] failed to create ostream on file '" << settings.outputFile << "'" << std::endl;
-        return 1;
-      }
-
-      // Print the transliterated text to the file
-      outputStream << outputText << std::endl;
-
-    } else {
-
-      // Print the transliterated text to the screen
-      std::cout << outputText << std::endl;
-    }
     break;
     }
 
@@ -150,28 +135,30 @@ int main(int argc, char* argv[])
       // Initialise an instance of the cipherKey class
       PlayfairCipher cipher {settings.cipherKey};
 
-      // Set the playfair cipher key
-      cipher.setKey(settings.cipherKey);
-      
       // Apply the cipher
-      std::string outputText { cipher.applyCipher( inputText, settings.cipherMode ) };
+      outputText = cipher.applyCipher( inputText, settings.cipherMode );
       
-      // Output the transliterated text
-      if (!settings.outputFile.empty()) {
-
-        // Open the file and check that we can write to it
-        std::ofstream outputStream(settings.outputFile);
-        if (!outputStream.good()) {
-          std::cerr << "[error] failed to create ostream on file '" << settings.outputFile << "'" << std::endl;
-          return 1;}
-        // Print the transliterated text to the file
-        outputStream << outputText << std::endl;} 
-      else {
-      // Print the transliterated text to the screen
-      std::cout << "output: " << outputText << std::endl;
-      } 
       break;
     }
+  }
+
+  // Output the transliterated text
+  if (!settings.outputFile.empty()) {
+
+    // Open the file and check that we can write to it
+    std::ofstream outputStream(settings.outputFile);
+    if (!outputStream.good()) {
+      std::cerr << "[error] failed to create ostream on file '" << settings.outputFile << "'" << std::endl;
+      return 1;
+    }
+
+    // Print the transliterated text to the file
+    outputStream << outputText << std::endl;
+
+  } else {
+
+    // Print the transliterated text to the screen
+    std::cout << outputText << std::endl;
   }
 
   // No requirement to return from main, but we do so for clarity

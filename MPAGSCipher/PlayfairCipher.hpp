@@ -43,8 +43,9 @@ class PlayfairCipher {
     * must be even so a "Z" is appended if this is not the case.
     * 
     * The playfair cipher locates the coordinates (coord1, coord2) of each pair of letters in a digraph on the cipher grid. If the two letters are on the same row, then the cipher replaces
-    * the letters with the letters one position to the right. If the pair of letters are in the same column then both letters are replaced with letters one position below. If the letters aren't
-    * in the same column or row, then they form the corners of a rectangle. Each letter of the digraph is then substituted with the opposite corner on the same row. 
+    * the letters with the letters one position to the right (left) if encrypting (decrypting). If the pair of letters are in the same column then both letters are replaced with letters one
+    * position below (above) if encrypting (decrypting). If the letters aren't in the same column or row, then they form the corners of a rectangle. Each letter of the digraph is then substituted
+    * with the opposite corner on the same row. 
     * 
     * \param inputText is the string we want to convert
     * \param cipherMode tells the function whether to encrypt or decrypt the text
@@ -52,15 +53,20 @@ class PlayfairCipher {
     * \return outputString
     *
     */
-
-    std::string applyCipher( std::string& inputText, const CipherMode cipherMode ) const;
+    std::string applyCipher( const std::string& inputText, const CipherMode cipherMode ) const;
 
   private:
     /// The cipher key
     std::string key_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    /// Maps linking the letters with coordinates on the cipher grid
-    std::map<char, std::vector<int> > letterToCoordMap_;
-    std::map<std::vector<int>, char > coordToLetterMap_ ;
+
+    /// Type definition for the coordinates in the 5x5 table
+    using PlayfairCoords = std::pair<int,int>;
+
+    /// Map linking the letters with the corresponding coordinates on the cipher grid
+    std::map<char,PlayfairCoords> letterToCoordMap_;
+
+    /// Map linking the coordinates on the cipher grid with the corresponding letters
+    std::map<PlayfairCoords,char> coordToLetterMap_ ;
 };
 
 #endif

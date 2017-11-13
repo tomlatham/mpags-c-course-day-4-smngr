@@ -53,7 +53,7 @@ line options:
 
 ```
 $ ./mpags-cipher --help
-Usage: mpags-cipher [-i <file>] [-o <file>] [-k <key>] [--encrypt/--decrypt]
+Usage: mpags-cipher [-i <file>] [-o <file>] [--cipher <cipher>] [-k <key>] [--encrypt/--decrypt]
 
 Encrypts/Decrypts input alphanumeric text using classical ciphers
 
@@ -68,6 +68,10 @@ Available options:
 
   -o FILE          Write processed text to FILE
                    Stdout will be used if not supplied
+
+  --cipher CIPHER
+                   Specify the cipher to be used to perform the encryption/decryption
+                   CIPHER can either be caesar or playfair - caesar is the default
 
   -k KEY           Specify the cipher KEY
                    A null key, i.e. no encryption, is used if not supplied
@@ -89,7 +93,11 @@ classical ciphers, it is transliterated using the following rules:
 - Digits are translated to their English equivalent words (e.g. '0' -> "ZERO")
 - All other characters (punctuation) are discarded
 
-At present only the Caesar Cipher is supported.
+At present, the Caesar and Playfair ciphers are supported.
+
+# Testing
+
+After building the MPAGSCipher library it can be tested by running `ctest -VV` from the build directory.
 
 # Source Code Layout
 Under this directory, the code and associated files are organised as
@@ -97,19 +105,34 @@ follows:
 
 ```
 MPAGS-Code
-├── README.md             This file, describes the project
-├── LICENSE               License file, in our case MIT
 ├── CMakeLists.txt        CMake build script
+├── LICENSE               License file, in our case MIT
+├── README.md             This file, describes the project
 ├── mpags-cipher.cpp      Main program C++ source file
+├── Documentation         Subdirectory for documentation of the MPAGSCipher library
+│   ├── CMakeLists.txt
+│   └── Doxyfile.in
 ├── MPAGSCipher           Subdirectory for MPAGSCipher library code
+│   ├── CMakeLists.txt
 │   ├── CaesarCipher.cpp
 │   ├── CaesarCipher.hpp
 │   ├── CipherMode.hpp
+│   ├── CipherType.hpp
+│   ├── PlayfairCipher.cpp
+│   ├── PlayfairCipher.hpp
 │   ├── ProcessCommandLine.cpp
 │   ├── ProcessCommandLine.hpp
 │   ├── TransformChar.cpp
 │   └── TransformChar.hpp
-├── mpags-cipher.cpp
+├── Testing               Subdirectory for testing the MPAGSCipher library
+│   ├── CMakeLists.txt
+│   ├── catch.hpp
+│   ├── testCaesarCipher.cpp
+│   ├── testCatch.cpp
+│   ├── testHello.cpp
+│   ├── testPlayfairCipher.cpp
+│   ├── testProcessCommandLine.cpp
+│   └── testTransformChar.cpp
 ```
 
 # Copying
