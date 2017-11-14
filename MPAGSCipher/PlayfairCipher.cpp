@@ -133,11 +133,11 @@ std::string PlayfairCipher::applyCipher( const std::string& inputText, const Cip
       {
         if (outputText[i] == 'X')
         {
-          outputText.insert(i,"Q");
+          outputText.insert(i+1,"Q");
         }
         else
         {
-          outputText.insert(i,"X");
+          outputText.insert(i+1,"X");
         }
       }
      }
